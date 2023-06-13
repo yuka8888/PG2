@@ -1,32 +1,23 @@
 #include<stdio.h>
 
 int main() {
-	const char* corlor[] = {
-		"YELLOW",
-		"RED",
-		"BLUE",
-		"GREEN",
-		"BLACK",
-		"WHITE"
-	};
-	const char* p;
-	const char** pp;
+	FILE* fp;
+	char fname[] = "test.txst";
+	int err;
+	err = fopen_s(&fp, fname, "r");
+	char str[32] = {};
 
-	p = corlor[4];
-	printf("%s\n", p);
+	if (err != 0) {
+		printf("%s file not open!\n", fname);
+		return err;
+	}
+	else {
+		printf("%s file opened!\n", fname);
+		fscanf_s(fp, "%s", &str, sizeof(str));
+		printf("ì«Ç›çûÇÒÇæï∂éöóÒÇÕ%sÇ≈Ç∑\n", str);
+	}
 
-	p++;
-	printf("%s\n", p);
-
-	pp = corlor;
-	printf("%s\n", *pp + 2);
-
-	printf("%s\n", *pp + 12);
-
-	pp += 3;
-	printf("%c", *(*pp + 1));
-
-	
+	fclose(fp);
 
 	return 0;
 }
