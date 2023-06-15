@@ -3,43 +3,49 @@
 #include <string.h>
 
 struct CELL {
-	int val;
+	char fishName[32];
+	int price;
 	CELL* prev;
 	CELL* next;
 };
 
-void create(CELL* endCell, int val);
-void index(CELL *endCell);
-CELL* getInseertListAddress(CELL *endCELL, int iterator);
+void create(CELL* currentCell, char fishName[], int price);
+void index(CELL* endCell);
+CELL* getInseertListAddress(CELL* endCELL, int iterator);
 
 int main() {
 	int iterator;
-	int inputValue;
-	CELL *insertCell;
+	char fishName[32];
+	int price;
+	CELL* insertCell;
 
 	CELL head;
 	head.next = nullptr;
 	head.prev = nullptr;
 
 	while (1) {
-		printf("何番目のセルの後ろに挿入しますか？\n");
+		printf("何番目に好きなお寿司ですか？\n");
 		scanf_s("%d", &iterator);
 
-		printf("挿入する値を入力してください？\n");
-		scanf_s("%d", &inputValue);
+		printf("好きなお寿司を入力してください\n");
+		scanf_s("%s", fishName, 32);
+
+		printf("1貫の値段を入力してください\n");
+		scanf_s("%d", &price);
 
 		insertCell = getInseertListAddress(&head, iterator);
-		create(insertCell, inputValue);
+		create(insertCell, fishName, price);
 
 		index(&head);
 	}
 	return 0;
 }
 
-void create(CELL* currentCell, int val) {
+void create(CELL* currentCell, char fishName[], int price) {
 	CELL* newCell;
 	newCell = (CELL*)malloc(sizeof(CELL));
-	newCell->val = val;
+	strcpy_s(newCell->fishName, 32, fishName);
+	newCell->price = price;
 	newCell->prev = currentCell;
 	newCell->next = currentCell->next;
 
@@ -53,13 +59,15 @@ void create(CELL* currentCell, int val) {
 
 void index(CELL* endCell) {
 	int no = 1;
+	printf("|rank|  前のアドレス  |寿司ネタ|値段|    アドレス    |  次のアドレス  |\n");
 	while (endCell->next != nullptr) {
 		endCell = endCell->next;
-		printf("%d ", no);
-		printf("%p ", endCell->prev);
-		printf("%5d ", endCell->val);
-		printf("(%p) ", endCell);
-		printf("%p\n", endCell->next);
+		printf("|%4d", no);
+		printf("|%p", endCell->prev);
+		printf("|%8s", endCell->fishName);
+		printf("|%4d", endCell->price);
+		printf("|%p", endCell);
+		printf("|%p|\n", endCell->next);
 		no++;
 	}
 }
