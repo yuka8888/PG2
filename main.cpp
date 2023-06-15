@@ -3,24 +3,24 @@
 #include <string.h>
 
 struct Cell {
-	char fishName[32];
+	int val;
 	Cell* next;
 };
 
-void create(Cell* endCell, char fishName[]);
+void create(Cell* endCell, int val);
 void index(Cell *endCell);
 
 int main() {
-	char fishName[32];
+	int val;
 	Cell head;
 	head.next = nullptr;
 
 	while (1) {
-		printf("D‚«‚È‚¨ŽõŽi‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+		printf("D‚«‚È”Žš‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
 
-		scanf_s("%s", fishName, 32);
+		scanf_s("%d", &val);
 
-		create(&head, fishName);
+		create(&head, val);
 
 		index(&head);
 	}
@@ -28,12 +28,12 @@ int main() {
 	return 0;
 }
 
-void create(Cell* endCell, char fishName[]) {
+void create(Cell* endCell, int val) {
 	Cell* newCell;
 
 	newCell = (Cell*)malloc(sizeof(Cell));
 
-	strcpy_s(newCell->fishName, 32, fishName);
+	newCell->val = val;
 
 	newCell->next = NULL;
 
@@ -48,7 +48,7 @@ void index(Cell* endCell) {
 	printf("[");
 	while (endCell->next != NULL) {
 		endCell = endCell->next;
-		printf("%s,", endCell->fishName);
+		printf("%d,", endCell->val);
 	}
 	printf("]\n");
 }
