@@ -2,53 +2,76 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct Cell {
-	char fishName[32];
-	Cell* next;
+struct CELL {
+	int val;
+	CELL* prev;
+	CELL* next;
 };
 
-void create(Cell* endCell, char fishName[]);
-void index(Cell *endCell);
+void create(CELL* endCell, int val);
+void index(CELL *endCell);
+CELL* getInseertListAddress(CELL *endCELL, int iterator);
 
 int main() {
-	char fishName[32];
-	Cell head;
+	int iterator;
+	int inputValue;
+	CELL *insertCell;
+
+	CELL head;
 	head.next = nullptr;
+	head.prev = nullptr;
 
 	while (1) {
-		printf("D‚«‚È‚¨ŽõŽi‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+		printf("‰½”Ô–Ú‚ÌƒZƒ‹‚ÌŒã‚ë‚É‘}“ü‚µ‚Ü‚·‚©H\n");
+		scanf_s("%d", &iterator);
 
-		scanf_s("%s", fishName, 32);
+		printf("‘}“ü‚·‚é’l‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢H\n");
+		scanf_s("%d", &inputValue);
 
-		create(&head, fishName);
+		insertCell = getInseertListAddress(&head, iterator);
+		create(insertCell, inputValue);
 
 		index(&head);
 	}
-
 	return 0;
 }
 
-void create(Cell* endCell, char fishName[]) {
-	Cell* newCell;
+void create(CELL* currentCell, int val) {
+	CELL* newCell;
+	newCell = (CELL*)malloc(sizeof(CELL));
+	newCell->val = val;
+	newCell->prev = currentCell;
+	newCell->next = currentCell->next;
 
-	newCell = (Cell*)malloc(sizeof(Cell));
-
-	strcpy_s(newCell->fishName, fishName);
-
-	newCell->next = NULL;
-
-	while (endCell->next != NULL) {
-		endCell = endCell->next;
+	if (currentCell->next) {
+		CELL* nextCell = currentCell->next;
+		nextCell->prev = newCell;
 	}
 
-	endCell->next = newCell;
+	currentCell->next = newCell;
 }
 
-void index(Cell* endCell) {
-	printf("[");
-	while (endCell->next != NULL) {
+void index(CELL* endCell) {
+	int no = 1;
+	while (endCell->next != nullptr) {
 		endCell = endCell->next;
-		printf("%s,", endCell->fishName);
+		printf("%d ", no);
+		printf("%p ", endCell->prev);
+		printf("%5d ", endCell->val);
+		printf("(%p) ", endCell);
+		printf("%p\n", endCell->next);
+		no++;
 	}
-	printf("]\n");
+}
+
+CELL* getInseertListAddress(CELL* endCELL, int iterator) {
+	for (int i = 0; i < iterator; i++) {
+		if (endCELL->next) {
+			endCELL = endCELL->next;
+		}
+		else {
+			break;
+		}
+	}
+	return endCELL;
 }
