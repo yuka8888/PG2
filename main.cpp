@@ -33,7 +33,7 @@ void create(Cell* endCell, char fishName[]) {
 
 	newCell = (Cell*)malloc(sizeof(Cell));
 
-	strcpy_s(newCell->fishName, fishName);
+	strcpy_s(newCell->fishName, 32, fishName);
 
 	newCell->next = NULL;
 
