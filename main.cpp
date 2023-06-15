@@ -1,23 +1,54 @@
 #include<stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Cell {
+	char fishName[32];
+	Cell* next;
+};
+
+void create(Cell* endCell, char fishName[]);
+void index(Cell *endCell);
 
 int main() {
-	FILE* fp;
-	char fname[] = "test.txst";
-	int err;
-	err = fopen_s(&fp, fname, "r");
-	char str[32] = {};
+	char fishName[32];
+	Cell head;
+	head.next = nullptr;
 
-	if (err != 0) {
-		printf("%s file not open!\n", fname);
-		return err;
-	}
-	else {
-		printf("%s file opened!\n", fname);
-		fscanf_s(fp, "%s", &str, sizeof(str));
-		printf("“Ç‚Ýž‚ñ‚¾•¶Žš—ñ‚Í%s‚Å‚·\n", str);
-	}
+	while (1) {
+		printf("D‚«‚È‚¨ŽõŽi‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
 
-	fclose(fp);
+		scanf_s("%s", fishName, 32);
+
+		create(&head, fishName);
+
+		index(&head);
+	}
 
 	return 0;
+}
+
+void create(Cell* endCell, char fishName[]) {
+	Cell* newCell;
+
+	newCell = (Cell*)malloc(sizeof(Cell));
+
+	strcpy_s(newCell->fishName, fishName);
+
+	newCell->next = NULL;
+
+	while (endCell->next != NULL) {
+		endCell = endCell->next;
+	}
+
+	endCell->next = newCell;
+}
+
+void index(Cell* endCell) {
+	printf("[");
+	while (endCell->next != NULL) {
+		endCell = endCell->next;
+		printf("%s,", endCell->fishName);
+	}
+	printf("]\n");
 }
