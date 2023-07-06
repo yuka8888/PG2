@@ -3,19 +3,19 @@
 #include <string.h>
 
 struct CELL {
-	char fishName[32];
+	char name[32];
 	int price;
 	CELL* prev;
 	CELL* next;
 };
 
-void create(CELL* currentCell, char fishName[], int price);
+void create(CELL* currentCell, char name[], int price);
 void index(CELL* endCell);
 CELL* getInseertListAddress(CELL* endCELL, int iterator);
 
 int main() {
 	int iterator;
-	char fishName[32];
+	char name[32];
 	int price;
 	CELL* insertCell;
 
@@ -28,23 +28,23 @@ int main() {
 		scanf_s("%d", &iterator);
 
 		printf("D‚«‚È‚¨ŽõŽi‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
-		scanf_s("%s", fishName, 32);
+		scanf_s("%s", name, 32);
 
 		printf("1ŠÑ‚Ì’l’i‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
 		scanf_s("%d", &price);
 
 		insertCell = getInseertListAddress(&head, iterator);
-		create(insertCell, fishName, price);
+		create(insertCell, name, price);
 
 		index(&head);
 	}
 	return 0;
 }
 
-void create(CELL* currentCell, char fishName[], int price) {
+void create(CELL* currentCell, char name[], int price) {
 	CELL* newCell;
 	newCell = (CELL*)malloc(sizeof(CELL));
-	strcpy_s(newCell->fishName, 32, fishName);
+	strcpy_s(newCell->name, 32, name);
 	newCell->price = price;
 	newCell->prev = currentCell;
 	newCell->next = currentCell->next;
@@ -64,7 +64,7 @@ void index(CELL* endCell) {
 		endCell = endCell->next;
 		printf("|%4d", no);
 		printf("|%p", endCell->prev);
-		printf("|%8s", endCell->fishName);
+		printf("|%8s", endCell->name);
 		printf("|%4d", endCell->price);
 		printf("|%p", endCell);
 		printf("|%p|\n", endCell->next);
